@@ -1,0 +1,34 @@
+---
+title: "RMD Presentation & Plotly <br>Diamonds Dataset"
+author: "Ioan Catana"
+date: "July 26, 2018"
+output: ioslides_presentation
+---
+
+```{r knitr_setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+```
+
+## Goal
+In this document we will try to understand how different factors may influence the price of a diamond.
+To answer that we use the `diamonds` dataset containing the prices and other attributes of almost 54,000 diamonds.
+To make interpretation easier we choose a random sample of one thousand entries from the original dataset.
+
+We plot weight of the diamond (`carat`) vs. price in US dollars (`price`) along the x/y axes. 
+We also introduce another dimension to visualize the quality of the cut (`cut` having the following values: *Fair, Good, Very Good, Premium, Ideal*) as colors in the plot.
+
+## Plotting the Data
+
+```{r diamonds_plot}
+library(plotly)
+data(diamonds)
+set.seed(112233)
+small_diamonds <- diamonds[sample(nrow(diamonds), 1000), ]
+plot_ly(small_diamonds, x = ~carat, y = ~price, color = ~cut,
+        text = ~paste("Carat: ", carat, '<br>Price:', price, ' $','<br>Cut:', cut),
+        type = "scatter", mode = "markers") %>%
+  layout(title = "Diamonds Dataset")
+```
+
